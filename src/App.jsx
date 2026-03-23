@@ -1,4 +1,4 @@
-
+import AppRouter  from "./routers/AppRouter"
 
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
   return (
     <>
    
-      <h1>Hello Me</h1> 
+      <AppRouter />
        
     </>
   )
