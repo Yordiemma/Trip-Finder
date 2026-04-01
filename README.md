@@ -1,16 +1,47 @@
-# React + Vite
+# Weekend in Stockholm
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React app for finding Stockholm events and saving them to a personal weekend guide.
 
-Currently, two official plugins are available:
+## What the app does
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Home shows the app and some Stockholm event inspiration
+- Explore loads Stockholm events from an API
+- Manage lets the user save, edit, delete, search, filter, sort, and favorite events
 
-## React Compiler
+## Main features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Add events to your weekend guide
+- View saved events
+- Edit saved events
+- Delete saved events
+- Search and filter events
+- Sort events
+- Favorite events
+- Live weather in Stockholm
 
-## Expanding the ESLint configuration
+## Run the project
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+Preview production build:
+
+```bash
+npm run preview
+```
+
+## Deployment
+
+- The app uses `HashRouter`
+- Vite is set with `base: "./"`
+- Build files are created in `dist/`
+
+This makes it easier to deploy on GitHub Pages or other static hosting.
