@@ -142,27 +142,26 @@ function App() {
   }
 
   function handleImportActivity(activityData) {
-    setActivities((currentActivities) => {
-      const alreadyExists = currentActivities.some(
-        (activity) =>
-          activity.title.toLowerCase() === activityData.title.toLowerCase() &&
-          activity.location.toLowerCase() === activityData.location.toLowerCase()
-      );
+    const existingActivity = activities.find(
+      (activity) =>
+        activity.title.toLowerCase() === activityData.title.toLowerCase() &&
+        activity.location.toLowerCase() === activityData.location.toLowerCase()
+    );
 
-      if (alreadyExists) {
-        showFeedback("info", "That place is already in Manage.");
-        return currentActivities;
-      }
+    if (existingActivity) {
+      showFeedback("info", "That place is already in Manage.");
+      return existingActivity;
+    }
 
-      const importedActivity = {
-        ...activityData,
-        id: crypto.randomUUID(),
-        favorite: false,
-      };
+    const importedActivity = {
+      ...activityData,
+      id: crypto.randomUUID(),
+      favorite: false,
+    };
 
-      showFeedback("success", "Place added to Manage.");
-      return [importedActivity, ...currentActivities];
-    });
+    setActivities((currentActivities) => [importedActivity, ...currentActivities]);
+    showFeedback("success", "Place added to Manage.");
+    return importedActivity;
   }
 
   function handleUpdateActivity(activityData) {

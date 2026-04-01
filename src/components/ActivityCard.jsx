@@ -1,7 +1,8 @@
 import { Heart, MapPin, Pencil, Trash2 } from "lucide-react";
 
-function ActivityCard({ activity, onEdit, onDelete, onToggleFavorite }) {
+function ActivityCard({ activity, isFocused, onEdit, onDelete, onToggleFavorite }) {
   const {
+    id,
     title,
     category,
     description,
@@ -14,7 +15,10 @@ function ActivityCard({ activity, onEdit, onDelete, onToggleFavorite }) {
   } = activity;
 
   return (
-    <article className="activity-card">
+    <article
+      id={`activity-${id}`}
+      className={`activity-card ${isFocused ? "activity-card--focused" : ""}`}
+    >
       <div className="activity-card__image-wrap">
         <img
           className="activity-card__image"

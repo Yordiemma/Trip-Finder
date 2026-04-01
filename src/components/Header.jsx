@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Header({ totalActivities, favoriteCount, weather }) {
   return (
     <header className="hero">
@@ -15,14 +17,24 @@ function Header({ totalActivities, favoriteCount, weather }) {
       </div>
 
       <div className="hero__stats">
-        <article className="stat-card">
+        <Link
+          className="stat-card stat-card--link"
+          to="/manage"
+          state={{ scrollToSavedEvents: true }}
+          aria-label="Open saved events"
+        >
           <strong>{totalActivities}</strong>
           <span>Activities</span>
-        </article>
-        <article className="stat-card">
+        </Link>
+        <Link
+          className="stat-card stat-card--link"
+          to="/manage"
+          state={{ scrollToSavedEvents: true }}
+          aria-label="Open favorite saved events"
+        >
           <strong>{favoriteCount}</strong>
           <span>Favorites</span>
-        </article>
+        </Link>
         <article className="stat-card stat-card--weather">
           <strong>
             {weather.isLoading

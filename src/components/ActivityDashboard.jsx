@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import ActivityForm from "./ActivityForm";
 import ActivityList from "./ActivityList";
 import EmptyState from "./EmptyState";
@@ -28,7 +29,11 @@ function ActivityDashboard({
   feedbackMessage,
   onDismissFeedback,
 }) {
+  const location = useLocation();
   const formPanelRef = useRef(null);
+  const listPanelRef = useRef(null);
+  const focusedActivityId = location.state?.focusActivityId ?? null;
+  const shouldScrollToSavedEvents = Boolean(location.state?.scrollToSavedEvents);
 
   useEffect(() => {
     if (!editingActivity || !formPanelRef.current) {
@@ -45,6 +50,34 @@ function ActivityDashboard({
       firstInput?.focus();
     });
   }, [editingActivity]);
+
+  useEffect(() => {
+    if (!focusedActivityId) {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      const activityCard = document.getElementById(`activity-${focusedActivityId}`);
+
+      activityCard?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    });
+  }, [focusedActivityId, activities]);
+
+  useEffect(() => {
+    if (!shouldScrollToSavedEvents || focusedActivityId) {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      listPanelRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }, [focusedActivityId, shouldScrollToSavedEvents]);
 
   return (
     <main className="dashboard">
@@ -94,7 +127,11 @@ function ActivityDashboard({
           />
         </div>
 
-        <div className="panel panel--list">
+        <div
+          className="panel panel--list"
+          ref={listPanelRef}
+          id="saved-events"
+        >
           <div className="section-heading">
             <div>
               <p className="eyebrow">Saved Events</p>
@@ -120,6 +157,7 @@ function ActivityDashboard({
           ) : (
             <ActivityList
               activities={activities}
+              focusedActivityId={focusedActivityId}
               onEdit={onEditActivity}
               onDelete={onDeleteActivity}
               onToggleFavorite={onToggleFavorite}

@@ -140,11 +140,12 @@ function Explore({ activities, onImportActivity }) {
           <div className="activity-grid">
             {error ? <p className="explore-message">{error}</p> : null}
             {events.map((event) => {
-              const alreadyAdded = activities.some(
+              const matchingActivity = activities.find(
                 (activity) =>
                   activity.title.toLowerCase() === event.title.toLowerCase() &&
                   activity.location.toLowerCase() === event.location.toLowerCase()
               );
+              const alreadyAdded = Boolean(matchingActivity);
 
               return (
                 <article key={event.id} className="activity-card">
