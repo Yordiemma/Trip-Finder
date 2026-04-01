@@ -28,6 +28,7 @@ const homeEventPreviews = [
     location: "Skeppsholmen",
     day: "Friday",
     category: "Culture",
+    description: "A calm start to the weekend with art, views, and museum atmosphere.",
     image:
       "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=1200&q=80",
   },
@@ -36,6 +37,7 @@ const homeEventPreviews = [
     location: "Sodermalm",
     day: "Saturday",
     category: "Nightlife",
+    description: "A stronger evening plan with music, people, and city energy.",
     image:
       "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1200&q=80",
   },
@@ -44,6 +46,7 @@ const homeEventPreviews = [
     location: "Kungsholmen",
     day: "Sunday",
     category: "Food",
+    description: "A slower daytime idea with food stalls, walking, and local feeling.",
     image:
       "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=1200&q=80",
   },
@@ -141,6 +144,7 @@ function Home({ activities, favoriteCount }) {
                 </div>
                 <h3>{event.title}</h3>
                 <p>{event.location}</p>
+                <p>{event.description}</p>
               </div>
             </article>
           ))}

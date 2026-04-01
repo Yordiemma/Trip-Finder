@@ -422,6 +422,11 @@ img {
   color: #52606d;
 }
 
+.home-event-card__content {
+  display: grid;
+  gap: 0.55rem;
+}
+
 .home-list__item p,
 .info-card p {
   margin: 0 0 0.75rem;
