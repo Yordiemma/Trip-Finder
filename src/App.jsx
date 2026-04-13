@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import AppRouter from "./routers/AppRouter";
 
+// REVIEW: Weather coordinates are hardcoded; consider env or user location for reuse outside Stockholm demo.
 const weatherRequestUrl =
   "https://api.open-meteo.com/v1/forecast?latitude=59.3293&longitude=18.0686&current=temperature_2m,wind_speed_10m&timezone=Europe%2FStockholm";
 
@@ -27,7 +28,9 @@ function App() {
 
     async function fetchStockholmWeather() {
       try {
-        const response = await fetch(weatherRequestUrl, { signal: controller.signal });
+        const response = await fetch(weatherRequestUrl, {
+          signal: controller.signal,
+        });
 
         if (!response.ok) {
           throw new Error("Could not load Stockholm weather.");
@@ -84,7 +87,7 @@ function App() {
 
     if (sortBy === "title") {
       sorted.sort((firstItem, secondItem) =>
-        firstItem.title.localeCompare(secondItem.title)
+        firstItem.title.localeCompare(secondItem.title),
       );
     }
 
@@ -96,8 +99,10 @@ function App() {
         "All Weekend": 4,
       };
 
+      // REVIEW: If activity.day is missing or not in dayOrder, sort compares NaN and order becomes unstable.
       sorted.sort(
-        (firstItem, secondItem) => dayOrder[firstItem.day] - dayOrder[secondItem.day]
+        (firstItem, secondItem) =>
+          dayOrder[firstItem.day] - dayOrder[secondItem.day],
       );
     }
 
@@ -109,16 +114,21 @@ function App() {
         Premium: 4,
       };
 
+      // REVIEW: Same as day sort — unknown priceLevel yields NaN and unpredictable ordering.
       sorted.sort(
         (firstItem, secondItem) =>
-          priceOrder[firstItem.priceLevel] - priceOrder[secondItem.priceLevel]
+          priceOrder[firstItem.priceLevel] - priceOrder[secondItem.priceLevel],
       );
     }
 
     if (sortBy === "favorites") {
-      sorted.sort((firstItem, secondItem) => Number(secondItem.favorite) - Number(firstItem.favorite));
+      sorted.sort(
+        (firstItem, secondItem) =>
+          Number(secondItem.favorite) - Number(firstItem.favorite),
+      );
     }
 
+    // REVIEW: sortBy "featured" does not apply a defined ordering; list stays insertion order — document or implement explicit featured logic.
     return sorted;
   }, [activities, searchQuery, selectedCategory, selectedDay, sortBy]);
 
@@ -131,6 +141,7 @@ function App() {
   }
 
   function handleAddActivity(activityData) {
+    // REVIEW: crypto.randomUUID() is unavailable in very old browsers / non-secure contexts; consider a tiny fallback id helper if you need broad support.
     const newActivity = {
       ...activityData,
       id: crypto.randomUUID(),
@@ -145,7 +156,7 @@ function App() {
     const existingActivity = activities.find(
       (activity) =>
         activity.title.toLowerCase() === activityData.title.toLowerCase() &&
-        activity.location.toLowerCase() === activityData.location.toLowerCase()
+        activity.location.toLowerCase() === activityData.location.toLowerCase(),
     );
 
     if (existingActivity) {
@@ -159,7 +170,10 @@ function App() {
       favorite: false,
     };
 
-    setActivities((currentActivities) => [importedActivity, ...currentActivities]);
+    setActivities((currentActivities) => [
+      importedActivity,
+      ...currentActivities,
+    ]);
     showFeedback("success", "Place added to Manage.");
     return importedActivity;
   }
@@ -169,8 +183,8 @@ function App() {
       currentActivities.map((activity) =>
         activity.id === editingActivityId
           ? { ...activity, ...activityData }
-          : activity
-      )
+          : activity,
+      ),
     );
     setEditingActivityId(null);
     showFeedback("success", "Activity updated.");
@@ -178,7 +192,7 @@ function App() {
 
   function handleDeleteActivity(activityId) {
     setActivities((currentActivities) =>
-      currentActivities.filter((activity) => activity.id !== activityId)
+      currentActivities.filter((activity) => activity.id !== activityId),
     );
 
     if (editingActivityId === activityId) {
@@ -193,8 +207,8 @@ function App() {
       currentActivities.map((activity) =>
         activity.id === activityId
           ? { ...activity, favorite: !activity.favorite }
-          : activity
-      )
+          : activity,
+      ),
     );
   }
 
@@ -211,6 +225,7 @@ function App() {
     setSearchQuery("");
     setSelectedCategory("All");
     setSelectedDay("All");
+    // REVIEW: sortBy is not reset here; "Clear filters" may still leave a non-default sort — confirm UX intent.
   }
 
   return (

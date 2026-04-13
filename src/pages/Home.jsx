@@ -1,10 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import EmptyState from "../components/EmptyState";
 
+// REVIEW: "Djurgarden" / "Sodermalm" spellings omit Swedish characters (Djurgården, Södermalm) — align with product copy or use ASCII consistently.
 const stockholmHighlights = [
   {
     title: "Gamla Stan",
-    description: "Historic streets, cafes, and a classic first stop in the city.",
+    description:
+      "Historic streets, cafes, and a classic first stop in the city.",
+    // REVIEW: Wikimedia Special:FilePath URLs can be brittle for hotlinking; consider a stable CDN or bundled asset for production.
     image:
       "https://commons.wikimedia.org/wiki/Special:FilePath/Stockholm%20%E2%80%93%20S%C3%B6dermalm%20%E2%80%93%20Gamla%20stan%20-%20panoramio.jpg",
   },
@@ -28,7 +31,8 @@ const homeEventPreviews = [
     location: "Skeppsholmen",
     day: "Friday",
     category: "Culture",
-    description: "A calm start to the weekend with art, views, and museum atmosphere.",
+    description:
+      "A calm start to the weekend with art, views, and museum atmosphere.",
     image:
       "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=1200&q=80",
   },
@@ -46,7 +50,8 @@ const homeEventPreviews = [
     location: "Kungsholmen",
     day: "Sunday",
     category: "Food",
-    description: "A slower daytime idea with food stalls, walking, and local feeling.",
+    description:
+      "A slower daytime idea with food stalls, walking, and local feeling.",
     image:
       "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=1200&q=80",
   },
@@ -62,8 +67,9 @@ function Home({ activities, favoriteCount }) {
           <p className="eyebrow">Home Page</p>
           <h2>Start here and build your Stockholm weekend guide</h2>
           <p>
-            Home is the starting page. Explore gives ideas from an API, and Manage
-            lets the user save, edit, delete, and organize their own activities.
+            Home is the starting page. Explore gives ideas from an API, and
+            Manage lets the user save, edit, delete, and organize their own
+            activities.
           </p>
           <div className="home-hero-panel__actions">
             <Link to="/explore" className="button button--primary">
@@ -136,10 +142,17 @@ function Home({ activities, favoriteCount }) {
         <div className="home-event-grid">
           {homeEventPreviews.map((event) => (
             <article key={event.title} className="home-event-card">
-              <img src={event.image} alt={event.title} loading="lazy" decoding="async" />
+              <img
+                src={event.image}
+                alt={event.title}
+                loading="lazy"
+                decoding="async"
+              />
               <div className="home-event-card__content">
                 <div className="activity-card__badges">
-                  <span className="badge badge--category">{event.category}</span>
+                  <span className="badge badge--category">
+                    {event.category}
+                  </span>
                   <span className="badge">{event.day}</span>
                 </div>
                 <h3>{event.title}</h3>
@@ -162,7 +175,12 @@ function Home({ activities, favoriteCount }) {
         <div className="home-highlight-grid">
           {stockholmHighlights.map((highlight) => (
             <article key={highlight.title} className="home-highlight-card">
-              <img src={highlight.image} alt={highlight.title} loading="lazy" decoding="async" />
+              <img
+                src={highlight.image}
+                alt={highlight.title}
+                loading="lazy"
+                decoding="async"
+              />
               <div className="home-highlight-card__content">
                 <h3>{highlight.title}</h3>
                 <p>{highlight.description}</p>
@@ -184,7 +202,6 @@ function Home({ activities, favoriteCount }) {
           <EmptyState
             title="No activities yet"
             description="Go to Manage to add your first Stockholm weekend activity."
-            
             actionLabel="Go to manage"
             onAction={() => navigate("/manage")}
           />
@@ -192,7 +209,12 @@ function Home({ activities, favoriteCount }) {
           <div className="home-list">
             {activities.slice(0, 4).map((activity) => (
               <article key={activity.id} className="home-list__item">
-                <img src={activity.image} alt={activity.title} loading="lazy" decoding="async" />
+                <img
+                  src={activity.image}
+                  alt={activity.title}
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div>
                   <h3>{activity.title}</h3>
                   <p>{activity.location}</p>

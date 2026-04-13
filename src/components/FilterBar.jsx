@@ -43,7 +43,10 @@ function FilterBar({
 
       <label className="filter-group">
         <span>Sort by</span>
-        <select value={sortBy} onChange={(event) => onSortChange(event.target.value)}>
+        <select
+          value={sortBy}
+          onChange={(event) => onSortChange(event.target.value)}
+        >
           <option value="featured">Featured order</option>
           <option value="title">Title</option>
           <option value="day">Day</option>
@@ -52,7 +55,12 @@ function FilterBar({
         </select>
       </label>
 
-      <button type="button" className="button button--secondary" onClick={onClearFilters}>
+      {/* REVIEW: Button clears search/category/day in parent but not sort — label says "filters" which may or may not include sort; align copy and behavior. */}
+      <button
+        type="button"
+        className="button button--secondary"
+        onClick={onClearFilters}
+      >
         Clear filters
       </button>
     </div>

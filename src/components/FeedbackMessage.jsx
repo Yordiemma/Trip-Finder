@@ -14,6 +14,7 @@ function FeedbackMessage({ message, onDismiss }) {
       window.clearTimeout(timeoutId);
     };
   }, [message, onDismiss]);
+  // REVIEW: If parent passes an inline onDismiss each render, this effect re-subscribes and can reset the auto-hide timer unexpectedly — wrap onDismiss in useCallback in App or omit from deps with eslint-disable + ref pattern.
 
   if (!message) {
     return null;

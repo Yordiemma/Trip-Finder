@@ -1,3 +1,4 @@
+# REVIEW: After npm ci, npm reported dependency vulnerabilities — run `npm audit` / `npm audit fix` before releases and assess false positives.
 # Logs
 logs
 *.log

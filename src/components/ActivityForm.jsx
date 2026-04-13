@@ -27,9 +27,10 @@ function ActivityForm({ initialValues, isEditing, onSubmit, onCancel }) {
       ...emptyValues,
       ...initialValues,
     }),
-    [initialValues]
+    [initialValues],
   );
 
+  // REVIEW: useState(startingValues) only uses initial state on mount; parent remounts via key on ActivityForm — if that key ever changes, confirm all edit flows still reset correctly.
   const [formValues, setFormValues] = useState(startingValues);
   const [errors, setErrors] = useState({});
 
@@ -104,7 +105,9 @@ function ActivityForm({ initialValues, isEditing, onSubmit, onCancel }) {
             aria-invalid={Boolean(errors.title)}
             aria-describedby={errors.title ? `${titleId}-error` : undefined}
           />
-          {errors.title ? <small id={`${titleId}-error`}>{errors.title}</small> : null}
+          {errors.title ? (
+            <small id={`${titleId}-error`}>{errors.title}</small>
+          ) : null}
         </label>
 
         <label className="form-field">
@@ -115,7 +118,9 @@ function ActivityForm({ initialValues, isEditing, onSubmit, onCancel }) {
             value={formValues.category}
             onChange={handleChange}
             aria-invalid={Boolean(errors.category)}
-            aria-describedby={errors.category ? `${categoryId}-error` : undefined}
+            aria-describedby={
+              errors.category ? `${categoryId}-error` : undefined
+            }
           >
             <option value="">Select category</option>
             {categoryOptions.map((category) => (
@@ -139,7 +144,9 @@ function ActivityForm({ initialValues, isEditing, onSubmit, onCancel }) {
             onChange={handleChange}
             placeholder="Sodermalm"
             aria-invalid={Boolean(errors.location)}
-            aria-describedby={errors.location ? `${locationId}-error` : undefined}
+            aria-describedby={
+              errors.location ? `${locationId}-error` : undefined
+            }
           />
           {errors.location ? (
             <small id={`${locationId}-error`}>{errors.location}</small>
@@ -148,7 +155,12 @@ function ActivityForm({ initialValues, isEditing, onSubmit, onCancel }) {
 
         <label className="form-field">
           <span>Day</span>
-          <select id={dayId} name="day" value={formValues.day} onChange={handleChange}>
+          <select
+            id={dayId}
+            name="day"
+            value={formValues.day}
+            onChange={handleChange}
+          >
             {dayOptions.map((day) => (
               <option key={day} value={day}>
                 {day}
@@ -183,7 +195,9 @@ function ActivityForm({ initialValues, isEditing, onSubmit, onCancel }) {
             onChange={handleChange}
             placeholder="What is this event and why should someone go?"
             aria-invalid={Boolean(errors.description)}
-            aria-describedby={errors.description ? `${descriptionId}-error` : undefined}
+            aria-describedby={
+              errors.description ? `${descriptionId}-error` : undefined
+            }
           />
           {errors.description ? (
             <small id={`${descriptionId}-error`}>{errors.description}</small>
@@ -197,7 +211,11 @@ function ActivityForm({ initialValues, isEditing, onSubmit, onCancel }) {
         </button>
 
         {isEditing ? (
-          <button type="button" className="button button--secondary" onClick={onCancel}>
+          <button
+            type="button"
+            className="button button--secondary"
+            onClick={onCancel}
+          >
             Cancel
           </button>
         ) : null}

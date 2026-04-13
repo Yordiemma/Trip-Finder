@@ -15,7 +15,11 @@ function MainLayout({ totalActivities, favoriteCount, weather }) {
       />
 
       <nav className="top-nav" aria-label="Main navigation">
-        <NavLink to="/" end className={({ isActive }) => navClassName(isActive)}>
+        <NavLink
+          to="/"
+          end
+          className={({ isActive }) => navClassName(isActive)}
+        >
           Home
         </NavLink>
         <NavLink
@@ -32,6 +36,7 @@ function MainLayout({ totalActivities, favoriteCount, weather }) {
         </NavLink>
       </nav>
 
+      {/* REVIEW: Outlet region could use <main> for a single document outline landmark; nested pages already use <main> — verify no duplicate main issues for a11y audits. */}
       <div id="main-content">
         <Outlet />
       </div>

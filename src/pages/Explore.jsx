@@ -22,9 +22,10 @@ function Explore({ activities, onImportActivity }) {
         setIsLoading(true);
         setError("");
 
+        // REVIEW: Third-party API URL and size are magic strings; extract constants or env for easier testing and staging overrides.
         const response = await fetch(
           "https://api.visitstockholm.com/api/public-v1/events/?size=8",
-          { signal: controller.signal }
+          { signal: controller.signal },
         );
 
         if (!response.ok) {
@@ -55,6 +56,7 @@ function Explore({ activities, onImportActivity }) {
             ? `Closest station: ${event.closest_station}`
             : "Check the event page for details.";
 
+          // REVIEW: Imported events use API id; ensure string/number consistency when used as React key alongside fallback string ids.
           return {
             id: event.id,
             title,
@@ -79,7 +81,8 @@ function Explore({ activities, onImportActivity }) {
           {
             id: "fallback-concert",
             title: "Live Music Night in Stockholm",
-            description: "Example event card shown because the event API could not load.",
+            description:
+              "Example event card shown because the event API could not load.",
             image: fallbackEventImages[0],
             url: "",
             category: "Nightlife",
@@ -91,7 +94,8 @@ function Explore({ activities, onImportActivity }) {
           {
             id: "fallback-museum",
             title: "Weekend Museum Event",
-            description: "A culture event example to keep Explore useful even when the API fails.",
+            description:
+              "A culture event example to keep Explore useful even when the API fails.",
             image: fallbackEventImages[1],
             url: "",
             category: "Culture",
@@ -101,7 +105,9 @@ function Explore({ activities, onImportActivity }) {
             notes: "Fallback event example.",
           },
         ]);
-        setError("Visit Stockholm events could not load, so fallback event cards are shown.");
+        setError(
+          "Visit Stockholm events could not load, so fallback event cards are shown.",
+        );
       } finally {
         setIsLoading(false);
       }
@@ -120,15 +126,19 @@ function Explore({ activities, onImportActivity }) {
         <div className="section-heading">
           <div>
             <p className="eyebrow">Explore Events</p>
-            <h2>Find events in Stockholm, then add the ones you like to your guide</h2>
+            <h2>
+              Find events in Stockholm, then add the ones you like to your guide
+            </h2>
           </div>
-          <span className="pill">{error ? "Visit Stockholm + Fallback" : "Visit Stockholm API"}</span>
+          <span className="pill">
+            {error ? "Visit Stockholm + Fallback" : "Visit Stockholm API"}
+          </span>
         </div>
 
         <p className="explore-intro">
-          Explore shows events from the Stockholm API. When the user finds something
-          interesting, they click <strong>Add to Manage</strong> and save it into
-          their own weekend guide.
+          Explore shows events from the Stockholm API. When the user finds
+          something interesting, they click <strong>Add to Manage</strong> and
+          save it into their own weekend guide.
         </p>
 
         {isLoading ? (
@@ -143,19 +153,26 @@ function Explore({ activities, onImportActivity }) {
               const matchingActivity = activities.find(
                 (activity) =>
                   activity.title.toLowerCase() === event.title.toLowerCase() &&
-                  activity.location.toLowerCase() === event.location.toLowerCase()
+                  activity.location.toLowerCase() ===
+                    event.location.toLowerCase(),
               );
               const alreadyAdded = Boolean(matchingActivity);
 
               return (
                 <article key={event.id} className="activity-card">
                   <div className="activity-card__image-wrap">
-                    <img className="activity-card__image" src={event.image} alt={event.title} />
+                    <img
+                      className="activity-card__image"
+                      src={event.image}
+                      alt={event.title}
+                    />
                   </div>
 
                   <div className="activity-card__content">
                     <div className="activity-card__badges">
-                      <span className="badge badge--category">{event.category}</span>
+                      <span className="badge badge--category">
+                        {event.category}
+                      </span>
                       <span className="badge">{event.day}</span>
                       <span className="badge">{event.priceLevel}</span>
                     </div>
@@ -165,7 +182,9 @@ function Explore({ activities, onImportActivity }) {
                       <MapPin size={16} />
                       <span>{event.location}</span>
                     </p>
-                    <p className="activity-card__description">{event.description}</p>
+                    <p className="activity-card__description">
+                      {event.description}
+                    </p>
                     <p className="activity-card__notes">
                       <CalendarDays size={16} />
                       <span>{event.notes}</span>
@@ -187,6 +206,7 @@ function Explore({ activities, onImportActivity }) {
                           className="button button--secondary"
                           href={event.url}
                           target="_blank"
+                          // REVIEW: Prefer rel="noopener noreferrer" for clarity on older engines even if noreferrer implies noopener today.
                           rel="noreferrer"
                         >
                           <ExternalLink size={16} />
@@ -214,6 +234,7 @@ function formatEventDay(startDate, endDate) {
     return "All Weekend";
   }
 
+  // REVIEW: Parsing date-only ISO strings as local midnight can shift weekday in some timezones; consider UTC parts or explicit TZ from API.
   const dayName = new Date(startDate).toLocaleDateString("en-US", {
     weekday: "long",
   });
