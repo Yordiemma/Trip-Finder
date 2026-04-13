@@ -1,6 +1,12 @@
 import { Heart, MapPin, Pencil, Trash2 } from "lucide-react";
 
-function ActivityCard({ activity, isFocused, onEdit, onDelete, onToggleFavorite }) {
+function ActivityCard({
+  activity,
+  isFocused,
+  onEdit,
+  onDelete,
+  onToggleFavorite,
+}) {
   const {
     id,
     title,
@@ -55,11 +61,20 @@ function ActivityCard({ activity, isFocused, onEdit, onDelete, onToggleFavorite 
         {notes ? <p className="activity-card__notes">{notes}</p> : null}
 
         <div className="activity-card__actions">
-          <button type="button" className="button button--secondary" onClick={onEdit}>
+          <button
+            type="button"
+            className="button button--secondary"
+            onClick={onEdit}
+          >
             <Pencil size={16} />
             Edit
           </button>
-          <button type="button" className="button button--danger" onClick={onDelete}>
+          {/* REVIEW: Delete is immediate with no confirmation — consider window.confirm or an accessible confirm dialog for destructive actions. */}
+          <button
+            type="button"
+            className="button button--danger"
+            onClick={onDelete}
+          >
             <Trash2 size={16} />
             Delete
           </button>

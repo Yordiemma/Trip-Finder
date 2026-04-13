@@ -1,3 +1,4 @@
+// REVIEW: Many props passed through — consider React Context or a small store if this grows further.
 import { HashRouter, Route, Routes } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import Explore from "../pages/Explore";
@@ -28,7 +29,9 @@ function AppRouter({
   feedbackMessage,
   onDismissFeedback,
 }) {
-  const favoriteCount = activities.filter((activity) => activity.favorite).length;
+  const favoriteCount = activities.filter(
+    (activity) => activity.favorite,
+  ).length;
 
   return (
     <HashRouter>
@@ -45,7 +48,9 @@ function AppRouter({
         >
           <Route
             index
-            element={<Home activities={activities} favoriteCount={favoriteCount} />}
+            element={
+              <Home activities={activities} favoriteCount={favoriteCount} />
+            }
           />
           <Route
             path="explore"

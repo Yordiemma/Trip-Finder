@@ -22,6 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # REVIEW: Pin actions to commit SHA for supply-chain hardening; dependabot can bump SHAs periodically.
       - name: Setup Node
         uses: actions/setup-node@v4
         with:

@@ -1,9 +1,14 @@
+/* REVIEW: Large single global stylesheet — consider CSS modules or co-located styles if components keep growing. */
 :root {
   color-scheme: light;
   font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   color: #15222e;
   background:
-    radial-gradient(circle at top left, rgba(108, 132, 163, 0.18), transparent 28%),
+    radial-gradient(
+      circle at top left,
+      rgba(108, 132, 163, 0.18),
+      transparent 28%
+    ),
     linear-gradient(180deg, #f4f6f8 0%, #eef2f5 100%);
 }
 
@@ -120,7 +125,9 @@ img {
   display: block;
   color: inherit;
   text-decoration: none;
-  transition: transform 160ms ease, box-shadow 160ms ease;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .stat-card--link:hover {
@@ -286,7 +293,10 @@ img {
   border-radius: 999px;
   padding: 0.9rem 1.1rem;
   font-weight: 700;
-  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    opacity 140ms ease;
 }
 
 .button:hover {
@@ -531,7 +541,9 @@ img {
 
 .activity-card {
   overflow: hidden;
-  transition: transform 160ms ease, box-shadow 160ms ease;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .activity-card:hover {

@@ -33,7 +33,10 @@ function ActivityDashboard({
   const formPanelRef = useRef(null);
   const listPanelRef = useRef(null);
   const focusedActivityId = location.state?.focusActivityId ?? null;
-  const shouldScrollToSavedEvents = Boolean(location.state?.scrollToSavedEvents);
+  const shouldScrollToSavedEvents = Boolean(
+    location.state?.scrollToSavedEvents,
+  );
+  // REVIEW: Router location.state is not cleared after scroll; revisiting Manage with stale state may re-scroll unexpectedly — consider navigate(..., { replace: true, state: {} }) after handling.
 
   useEffect(() => {
     if (!editingActivity || !formPanelRef.current) {
@@ -46,7 +49,9 @@ function ActivityDashboard({
         block: "start",
       });
 
-      const firstInput = formPanelRef.current?.querySelector("input, textarea, select");
+      const firstInput = formPanelRef.current?.querySelector(
+        "input, textarea, select",
+      );
       firstInput?.focus();
     });
   }, [editingActivity]);
@@ -57,7 +62,9 @@ function ActivityDashboard({
     }
 
     window.requestAnimationFrame(() => {
-      const activityCard = document.getElementById(`activity-${focusedActivityId}`);
+      const activityCard = document.getElementById(
+        `activity-${focusedActivityId}`,
+      );
 
       activityCard?.scrollIntoView({
         behavior: "smooth",
@@ -87,7 +94,9 @@ function ActivityDashboard({
             <p className="eyebrow">Search And Filter</p>
             <h2>Find events inside your saved Stockholm weekend guide</h2>
           </div>
-          <span className="pill">{activities.length} of {totalActivities} shown</span>
+          <span className="pill">
+            {activities.length} of {totalActivities} shown
+          </span>
         </div>
 
         <SearchBar value={searchQuery} onChange={onSearchChange} />
@@ -106,6 +115,7 @@ function ActivityDashboard({
         <div
           className="panel panel--form"
           ref={formPanelRef}
+          // REVIEW: tabIndex={-1} is idiomatic in React (number); string "-1" works in DOM but prefer numeric for consistency with docs.
           tabIndex="-1"
           aria-labelledby="event-form-heading"
         >
@@ -113,7 +123,9 @@ function ActivityDashboard({
             <div>
               <p className="eyebrow">Weekend Guide</p>
               <h2 id="event-form-heading">
-                {editingActivity ? "Edit saved event" : "Add event to your guide"}
+                {editingActivity
+                  ? "Edit saved event"
+                  : "Add event to your guide"}
               </h2>
             </div>
           </div>
@@ -127,11 +139,7 @@ function ActivityDashboard({
           />
         </div>
 
-        <div
-          className="panel panel--list"
-          ref={listPanelRef}
-          id="saved-events"
-        >
+        <div className="panel panel--list" ref={listPanelRef} id="saved-events">
           <div className="section-heading">
             <div>
               <p className="eyebrow">Saved Events</p>
@@ -166,7 +174,10 @@ function ActivityDashboard({
         </div>
       </section>
 
-      <FeedbackMessage message={feedbackMessage} onDismiss={onDismissFeedback} />
+      <FeedbackMessage
+        message={feedbackMessage}
+        onDismiss={onDismissFeedback}
+      />
     </main>
   );
 }

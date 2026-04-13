@@ -9,6 +9,7 @@ function ActivityList({
 }) {
   return (
     <div className="activity-grid">
+      {/* REVIEW: New inline lambdas each render can cause ActivityCard to re-render more often if memoized later — pass ids + stable handlers if optimizing. */}
       {activities.map((activity) => (
         <ActivityCard
           key={activity.id}

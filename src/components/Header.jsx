@@ -26,6 +26,7 @@ function Header({ totalActivities, favoriteCount, weather }) {
           <strong>{totalActivities}</strong>
           <span>Activities</span>
         </Link>
+        {/* REVIEW: Favorites link uses the same destination/state as Activities — does not filter or scroll to favorites-only; users may expect different behavior. */}
         <Link
           className="stat-card stat-card--link"
           to="/manage"
